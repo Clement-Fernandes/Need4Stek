@@ -10,6 +10,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+
 typedef struct info_s
 {
     char *buff;
