@@ -9,6 +9,8 @@
 #include "needforstek.h"
 #include "my.h"
 
+static const int TAG = 35;
+
 int ai(info_t *info)
 {
     while (info->finish == false) {
@@ -18,7 +20,7 @@ int ai(info_t *info)
             print_cmd(info, "CAR_FORWARD:0.5\n");
         else
             print_cmd(info, "CAR_FORWARD:0.0\n");
-        if (my_strcmp(info->lidar[35], "Track Cleared") == true)
+        if (my_strcmp(info->lidar[TAG], "Track Cleared") == true)
             info->finish = true;
         free_arr(info->lidar);
     }
