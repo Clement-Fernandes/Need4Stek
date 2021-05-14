@@ -22,6 +22,7 @@ char *my_strcpy(char *dest, char const *src);
 char *my_strdup(char const *src);
 char *my_revstr(char *str);
 char *my_strcat(char *dest, char const *src);
+char **my_str_to_word_arr(char const *str, char delim);
 void free_arr(char **arr);
 
 #endif

@@ -5,7 +5,10 @@
 ## Makefile
 ##
 
-SRC	=	source/main.c			\
+SRC		=	source/main.c \
+			source/init_struct.c \
+			source/print_cmd.c \
+			source/ai.c
 
 SRC_UT	=	tests/test.c		\
 
@@ -19,11 +22,11 @@ UNIT_NAME	=	unit_tests
 
 LIB_A	=	libmy.a
 
-CFLAGS =	-W -Wall -Wextra
+CFLAGS 	=	-W -Wall -Wextra
 
-CPPFLAGS =	-I./include/ -I./lib/include/
+CPPFLAGS 	=	-I./include/ -I./lib/include/
 
-LDFLAGS =	-L./lib -lmy
+LDFLAGS 	=	-L./lib -lmy
 
 CRITERION	=	--coverage -lcriterion
 
