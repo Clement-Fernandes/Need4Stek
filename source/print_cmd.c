@@ -6,8 +6,8 @@
 */
 
 #include <stdio.h>
-#include "needforstek.h"
 #include "my.h"
+#include "needforstek.h"
 
 int print_cmd(info_t *info, char *str)
 {

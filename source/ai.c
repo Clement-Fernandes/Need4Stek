@@ -6,47 +6,83 @@
 */
 
 #include <stdlib.h>
-#include "needforstek.h"
+#include <stdio.h>
 #include "my.h"
+#include "needforstek.h"
 
 static const int TAG = 35;
+static const int MID = 19;
+static const int LEFT = 3;
+static const int RIGHT = 34;
 
-enum LIDAR_POS {LEFT = 3, MIDDLE = 19, RIGHT = 34};
-
-static void set_speed(info_t *info)
+static void end_track(info_t *info)
 {
-    if (atof(info->lidar[19]) > 500.0)
-        print_cmd(info, "CAR_FORWARD:0.5\n");
-    else
-        print_cmd(info, "CAR_FORWARD:0.0\n");
+    if (my_strcmp(info->lidar[TAG], "Track Cleared") == true)
+        info->finish = true;
 }
 
-static void turn_wheels(info_t *info)
+static void move_wheels(info_t *info)
 {
-    if (atof(info->lidar[RIGHT]) > atof(info->lidar[LEFT])) {
-        print_cmd(info, "WHEELS_DIR:-0.2\n");
-        print_cmd(info, "CAR_FORWARD:0.25\n");
+    float i = 0;
+
+    if (atof(info->lidar[LEFT]) < atof(info->lidar[RIGHT])) {
+        i = (atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]) * 0.1);
+        print_cmd(info, "CAR_FORWARD:0.3\n");
     }
-    else if (atof(info->lidar[RIGHT]) < atof(info->lidar[LEFT])) {
-        print_cmd(info, "WHEELS_DIR:0.2\n");
-        print_cmd(info, "CAR_FORWARD:0.25\n");
-    }
-    else {
-        print_cmd(info, "WHEELS_DIR:0\n");
-        print_cmd(info, "CAR_FORWARD:0.5\n");
+    if (atof(info->lidar[LEFT]) > atof(info->lidar[RIGHT])) {
+        i = (atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT])) * 0.0;
+        print_cmd(info, "CAR_FORWARD:0.3\n");
     }
 }
+
+// static void wheels_dir(info_t *info)
+// {
+//     if (atof(info->lidar[LEFT]) < atof(info->lidar[RIGHT])) {
+//         print_cmd(info, "WHEELS_DIR:-0.2\n");
+//         print_cmd(info, "CAR_FORWARD:0.4\n");
+//     }
+//     if (atof(info->lidar[LEFT]) > atof(info->lidar[RIGHT])) {
+//         print_cmd(info, "WHEELS_DIR:0.2\n");
+//         print_cmd(info, "CAR_FORWARD:0.4\n");
+//     }
+// }
+
+// enum LIDAR_POS {LEFT = 3, MIDDLE = 19, RIGHT = 34};
+
+// static void set_speed(info_t *info)
+// {
+//     if (atof(info->lidar[19]) > 500.0)
+//         print_cmd(info, "CAR_FORWARD:0.5\n");
+//     else
+//         print_cmd(info, "CAR_FORWARD:0.0\n");
+// }
+
+// static void turn_wheels(info_t *info)
+// {
+//     if (atof(info->lidar[RIGHT]) > atof(info->lidar[LEFT])) {
+//         print_cmd(info, "WHEELS_DIR:-0.2\n");
+//         print_cmd(info, "CAR_FORWARD:0.25\n");
+//     }
+//     else if (atof(info->lidar[RIGHT]) < atof(info->lidar[LEFT])) {
+//         print_cmd(info, "WHEELS_DIR:0.2\n");
+//         print_cmd(info, "CAR_FORWARD:0.25\n");
+//     }
+//     else {
+//         print_cmd(info, "WHEELS_DIR:0\n");
+//         print_cmd(info, "CAR_FORWARD:0.5\n");
+//     }
+// }
 
 int ai(info_t *info)
 {
     while (info->finish == false) {
         print_cmd(info, "GET_INFO_LIDAR\n");
         info->lidar = my_str_to_word_arr(info->buff, ':');
-        set_speed(info);
-        turn_wheels(info);
-        if (my_strcmp(info->lidar[TAG], "Track Cleared") == true) {
-            info->finish = true;
-        }
+        if (atof(info->lidar[MID]) > 2000.0)
+            print_cmd(info, "CAR_FORWARD:0.7\n");
+        else
+            move_wheels(info);
+        end_track(info);
         free_arr(info->lidar);
     }
     print_cmd(info, "CAR_FORWARD:0.0\n");
