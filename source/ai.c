@@ -16,24 +16,30 @@ static void end_track(info_t *info)
 {
     if (my_strcmp(info->lidar[TAG], "Track Cleared") == true)
         info->finish = true;
+    else if (my_strcmp(info->lidar[TAG], "Lap Cleared") == true)
+        info->finish = true;
 }
 
 static void move_wheels(info_t *info)
 {
-    float dir = 0;
-    float left_value = atof(info->lidar[LEFT]);
-    float right_value = atof(info->lidar[RIGHT]);
+    float dir = atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]);
 
-    if (left_value < 250 || right_value < 250)
-        dir = 0.4;
-    else if (left_value == right_value)
-        dir = 0;
-    else
-        dir = 0.15;
-    if (left_value < right_value)
-        dir *= -1;
-    print_float_cmd(info, "WHEELS_DIR:", dir);
-    print_cmd(info, "CAR_FORWARD:0.3\n");
+    if (dir < 0.0) {
+        if(atof(info->lidar[MIDDLE]) >= 850)
+            print_cmd(info, "WHEELS_DIR:-0.04\n");
+        else if (atof(info->lidar[MIDDLE]) < 850 && atof(info->lidar[MIDDLE]) >= 500)
+            print_cmd(info, "WHEELS_DIR:-0.2\n");
+        else
+            print_cmd(info, "WHEELS_DIR:-0.4\n");
+    }
+    else {
+        if(atof(info->lidar[MIDDLE]) >= 850)
+            print_cmd(info, "WHEELS_DIR:0.04\n");
+        else if (atof(info->lidar[MIDDLE]) < 850 && atof(info->lidar[MIDDLE]) >= 500)
+            print_cmd(info, "WHEELS_DIR:0.2\n");
+        else
+            print_cmd(info, "WHEELS_DIR:0.4\n");
+    }
 }
 
 int ai(info_t *info)
@@ -42,13 +48,15 @@ int ai(info_t *info)
         print_cmd(info, "GET_INFO_LIDAR\n");
         info->lidar = my_str_to_word_arr(info->buff, ':');
         if (atof(info->lidar[MIDDLE]) > 2000.0)
-            print_cmd(info, "CAR_FORWARD:0.5\n");
-        else
+            print_cmd(info, "CAR_FORWARD:1.0\n");
+        else {
+            print_cmd(info, "CAR_FORWARD:0.3\n");
             move_wheels(info);
+        }
         end_track(info);
         free_arr(info->lidar);
     }
     print_cmd(info, "CAR_FORWARD:0.0\n");
-    print_cmd(info, "CYCLE_WAIT:5\n");
+    print_cmd(info, "CYCLE_WAIT:2\n");
     return (0);
 }

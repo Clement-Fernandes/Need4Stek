@@ -25,5 +25,6 @@ int print_cmd(info_t *info, char *str);
 int print_float_cmd(info_t *info, char *str, float val);
 
 int ai(info_t *info);
+int print_float_cmd(info_t *info, char *str, float val);
 
 #endif /* !MY_PROG_H_ */
