@@ -16,3 +16,13 @@ int print_cmd(info_t *info, char *str)
         return (84);
     return (0);
 }
+
+int print_float_cmd(info_t *info, char *str, float val)
+{
+    my_putstr(str);
+    my_put_float(val);
+    my_putchar('\n');
+    if (getline(&info->buff, &info->size, stdin) == -1)
+        return (84);
+    return (0);
+}

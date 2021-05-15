@@ -11,7 +11,6 @@ void my_putchar(char c);
 
 void my_put_float(float nbr)
 {
-    double myfloat;
     int float_part = 0;
     int int_part = 0;
 
