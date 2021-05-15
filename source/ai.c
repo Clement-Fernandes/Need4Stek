@@ -23,29 +23,11 @@ static void end_track(info_t *info)
 
 static void move_wheels(info_t *info)
 {
-    float i = 0;
+    double i = (atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]) * 0.1);
 
-    if (atof(info->lidar[LEFT]) < atof(info->lidar[RIGHT])) {
-        i = (atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]) * 0.1);
-        print_cmd(info, "CAR_FORWARD:0.3\n");
-    }
-    if (atof(info->lidar[LEFT]) > atof(info->lidar[RIGHT])) {
-        i = (atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT])) * 0.0;
-        print_cmd(info, "CAR_FORWARD:0.3\n");
-    }
+    print_cmd(info, "CAR_FORWARD:0.2\n");
+    print_float_cmd(info, "WHEELS_DIR:", i);
 }
-
-// static void wheels_dir(info_t *info)
-// {
-//     if (atof(info->lidar[LEFT]) < atof(info->lidar[RIGHT])) {
-//         print_cmd(info, "WHEELS_DIR:-0.2\n");
-//         print_cmd(info, "CAR_FORWARD:0.4\n");
-//     }
-//     if (atof(info->lidar[LEFT]) > atof(info->lidar[RIGHT])) {
-//         print_cmd(info, "WHEELS_DIR:0.2\n");
-//         print_cmd(info, "CAR_FORWARD:0.4\n");
-//     }
-// }
 
 int ai(info_t *info)
 {

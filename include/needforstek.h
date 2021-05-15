@@ -21,5 +21,6 @@ typedef struct info_s
 info_t *init_struct(void);
 int print_cmd(info_t *info, char *str);
 int ai(info_t *info);
+int print_float_cmd(info_t *info, char *str, double val);
 
 #endif /* !MY_PROG_H_ */
