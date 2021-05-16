@@ -27,22 +27,12 @@ static void move_wheels(info_t *info)
 {
     float dir = atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]);
 
-    if (dir < 0.0) {
-        if(atof(info->lidar[MID]) >= 850)
-            print_cmd(info, "WHEELS_DIR:-0.04\n");
-        else if (atof(info->lidar[MID]) < 850 && atof(info->lidar[MID]) >= 500)
-            print_cmd(info, "WHEELS_DIR:-0.2\n");
-        else
-            print_cmd(info, "WHEELS_DIR:-0.4\n");
-    }
-    else {
-        if(atof(info->lidar[MID]) >= 850)
-            print_cmd(info, "WHEELS_DIR:0.04\n");
-        else if (atof(info->lidar[MID]) < 850 && atof(info->lidar[MID]) >= 500)
-            print_cmd(info, "WHEELS_DIR:0.2\n");
-        else
-            print_cmd(info, "WHEELS_DIR:0.4\n");
-    }
+    if (dir < 0.0)
+        move_right(info);
+    else if (dir > 0.0)
+        move_left(info);
+    else
+        print_cmd(info, "WHEELS_DIR:0.0\n");
 }
 
 int ai(info_t *info)

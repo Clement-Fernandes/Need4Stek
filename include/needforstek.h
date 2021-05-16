@@ -23,5 +23,7 @@ info_t *init_struct(void);
 int print_cmd(info_t *info, char *str);
 int ai(info_t *info);
 int print_float_cmd(info_t *info, char *str, float val);
+void move_right(info_t *info);
+void move_left(info_t *info);
 
 #endif /* !MY_PROG_H_ */

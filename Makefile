@@ -8,7 +8,8 @@
 SRC		=	source/main.c \
 			source/init_struct.c \
 			source/print_cmd.c \
-			source/ai.c
+			source/ai.c \
+			source/move.c
 
 SRC_UT	=	tests/test.c		\
 
