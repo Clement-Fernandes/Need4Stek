@@ -16,6 +16,8 @@ static void end_track(info_t *info)
 {
     if (my_strcmp(info->lidar[TAG], "Track Cleared") == true)
         info->finish = true;
+    else if (my_strcmp(info->lidar[TAG], "Lap Cleared") == true)
+        info->finish = true;
 }
 
 int ai(info_t *info)
@@ -31,6 +33,6 @@ int ai(info_t *info)
         free_arr(info->lidar);
     }
     print_cmd(info, "CAR_FORWARD:0.0\n");
-    print_cmd(info, "CYCLE_WAIT:5\n");
+    print_cmd(info, "CYCLE_WAIT:2\n");
     return (0);
 }
