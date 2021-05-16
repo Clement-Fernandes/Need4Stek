@@ -26,4 +26,7 @@ int print_float_cmd(info_t *info, char *str, float val);
 
 int ai(info_t *info);
 
+float move_wheels(info_t *info);
+void move_speed(info_t *info, float dir);
+
 #endif /* !MY_PROG_H_ */
