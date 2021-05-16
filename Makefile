@@ -24,7 +24,6 @@ LDFLAGS 	=	-L./lib
 
 LDLIBS		=	-lmy
 
-
 CC	=	gcc
 
 RM	=	rm -f
