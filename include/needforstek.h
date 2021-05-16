@@ -20,8 +20,10 @@ typedef struct info_s
 } info_t;
 
 info_t *init_struct(void);
-int print_cmd(info_t *info, char *str);
+
 int ai(info_t *info);
+int run_cars(info_t *info);
+int print_cmd(info_t *info, char *str);
 int print_float_cmd(info_t *info, char *str, float val);
 void move_right(info_t *info);
 void move_left(info_t *info);

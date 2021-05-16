@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "needforstek.h"
 
-static const int MID = 18;
+enum LIDAR_POS {LEFT = 3, MID = 18, RIGHT = 34, TAG};
 
 void move_right(info_t *info)
 {

@@ -10,17 +10,20 @@
 #include "my.h"
 #include "needforstek.h"
 
-static const int TAG = 35;
-static const int MID = 18;
-static const int LEFT = 3;
-static const int RIGHT = 34;
+enum LIDAR_POS {LEFT = 3, MIDDLE = 19, RIGHT = 34, TAG};
 
 static void end_track(info_t *info)
 {
-    if (my_strcmp(info->lidar[TAG], "Track Cleared") == true)
-        info->finish = true;
-    else if (my_strcmp(info->lidar[TAG], "Lap Cleared") == true)
-        info->finish = true;
+    for (int i = 3; info->lidar[i] != NULL; i++) {
+        if (my_strcmp(info->lidar[i], "Track Cleared") == true) {
+            info->finish = true;
+            return;
+        }
+        else if (my_strcmp(info->lidar[i], "Lap Cleared") == true) {
+            info->finish = true;
+            return;
+        }
+    }
 }
 
 static void move_wheels(info_t *info)
@@ -40,7 +43,7 @@ int ai(info_t *info)
     while (info->finish == false) {
         print_cmd(info, "GET_INFO_LIDAR\n");
         info->lidar = my_str_to_word_arr(info->buff, ':');
-        if (atof(info->lidar[MID]) > 2000.0)
+        if (atof(info->lidar[MIDDLE]) > 2000.0)
             print_cmd(info, "CAR_FORWARD:1.0\n");
         else {
             print_cmd(info, "CAR_FORWARD:0.3\n");
