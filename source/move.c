@@ -31,8 +31,6 @@ float move_wheels(info_t *info)
 void move_speed(info_t *info, float dir)
 {
     float speed = 0;
-    float left_value = atof(info->lidar[LEFT]);
-    float right_value = atof(info->lidar[RIGHT]);
 
     if (dir < 0)
         dir *= (-1);
