@@ -5,11 +5,12 @@
 ## Makefile
 ##
 
-SRC		=	source/main.c 			\
+SRC		=	source/ai.c				\
 			source/init_struct.c	\
-			source/print_cmd.c 		\
-			source/ai.c				\
+			source/main.c 			\
 			source/move.c			\
+			source/print_cmd.c 		\
+			source/run_cars.c		\
 
 OBJ	=	$(SRC:.c=.o)
 
