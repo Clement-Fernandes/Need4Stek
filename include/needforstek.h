@@ -21,12 +21,11 @@ typedef struct info_s
 
 info_t *init_struct(void);
 
-int print_cmd(info_t *info, char *str);
-int print_float_cmd(info_t *info, char *str, float val);
-
 int ai(info_t *info);
-
+int run_cars(info_t *info);
 float move_wheels(info_t *info);
+int print_cmd(info_t *info, char *str);
 void move_speed(info_t *info, float dir);
+int print_float_cmd(info_t *info, char *str, float val);
 
 #endif /* !MY_PROG_H_ */
