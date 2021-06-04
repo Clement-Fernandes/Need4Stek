@@ -40,6 +40,27 @@ void move_left(info_t *info)
     }
 }
 
+void move_wheels_back(info_t *info, float dir)
+{
+    if (dir < 0.0 && touching_wall(info) == true)
+        move_left(info);
+    else if (dir > 0.0 && touching_wall(info) == true)
+        move_right(info);
+}
+
+void move_wheels(info_t *info)
+{
+    float dir = atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]);
+
+    move_wheels_back(info, dir);
+    if (dir < 0.0 && touching_wall(info) == false)
+        move_right(info);
+    else if (dir > 0.0 && touching_wall(info) == false)
+        move_left(info);
+    else
+        print_cmd(info, "WHEELS_DIR:0.0\n");
+}
+
 bool touching_wall(info_t *info)
 {
     float middle_lidar = atof(info->lidar[MID]);
