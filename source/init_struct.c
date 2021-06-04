@@ -18,5 +18,6 @@ info_t *init_struct(void)
     info->lidar = NULL;
     info->size = 0;
     info->finish = false;
+    info->dir = 0;
     return (info);
 }

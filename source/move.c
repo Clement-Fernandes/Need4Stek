@@ -8,24 +8,34 @@
 #include <stdlib.h>
 #include "needforstek.h"
 
-enum LIDAR_POS {LEFT = 3, MID = 18, RIGHT = 34, TAG};
-
 void move_right(info_t *info)
 {
-    if(atof(info->lidar[MID]) >= 850)
+    float middle_lidar = atof(info->lidar[MID]);
+
+    if(middle_lidar >= 850) {
         print_cmd(info, "WHEELS_DIR:-0.04\n");
-    else if (atof(info->lidar[MID]) < 850 && atof(info->lidar[MID]) >= 500)
+        info->dir = -0.04;
+    } else if (middle_lidar < 850 && middle_lidar >= 500) {
         print_cmd(info, "WHEELS_DIR:-0.2\n");
-    else
+        info->dir = -0.2;
+    } else {
         print_cmd(info, "WHEELS_DIR:-0.4\n");
+        info->dir = -0.4;
+    }
 }
 
 void move_left(info_t *info)
 {
-    if(atof(info->lidar[MID]) >= 850)
+    float middle_lidar = atof(info->lidar[MID]);
+
+    if(middle_lidar >= 850) {
         print_cmd(info, "WHEELS_DIR:0.04\n");
-    else if (atof(info->lidar[MID]) < 850 && atof(info->lidar[MID]) >= 500)
+        info->dir = 0.04;
+    } else if (middle_lidar < 850 && middle_lidar >= 500) {
         print_cmd(info, "WHEELS_DIR:0.2\n");
-    else
+        info->dir = 0.2;
+    } else {
         print_cmd(info, "WHEELS_DIR:0.4\n");
+        info->dir = 0.4;
+    }
 }

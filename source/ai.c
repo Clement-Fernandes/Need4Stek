@@ -10,8 +10,6 @@
 #include "my.h"
 #include "needforstek.h"
 
-enum LIDAR_POS {LEFT = 3, MIDDLE = 19, RIGHT = 34, TAG};
-
 static void end_track(info_t *info)
 {
     for (int i = 3; info->lidar[i] != NULL; i++) {
@@ -43,12 +41,8 @@ int ai(info_t *info)
     while (info->finish == false) {
         print_cmd(info, "GET_INFO_LIDAR\n");
         info->lidar = my_str_to_word_arr(info->buff, ':');
-        if (atof(info->lidar[MIDDLE]) > 2000.0)
-            print_cmd(info, "CAR_FORWARD:1.0\n");
-        else {
-            print_cmd(info, "CAR_FORWARD:0.3\n");
-            move_wheels(info);
-        }
+        move_speed(info);
+        move_wheels(info);
         end_track(info);
         free_arr(info->lidar);
     }
@@ -56,3 +50,17 @@ int ai(info_t *info)
     print_cmd(info, "CYCLE_WAIT:2\n");
     return (0);
 }
+
+void move_speed(info_t *info)
+{
+    float speed = 0;
+
+    if (info->dir < 0)
+        info->dir *= (-1);
+    for (float i = 0; i != 1; i += 0.1)
+        if (info->dir >= i && info->dir < (i + 0.1)) {
+            speed = 1 - (i + 0.3);
+            break;
+            }
+    print_float_cmd(info, "CAR_FORWARD:", speed);
+} 
