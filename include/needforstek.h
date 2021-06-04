@@ -30,5 +30,6 @@ int print_float_cmd(info_t *info, char *str, float val);
 void move_right(info_t *info);
 void move_left(info_t *info);
 void move_speed(info_t *info);
+bool touching_wall(info_t *info);
 
 #endif /* !MY_PROG_H_ */

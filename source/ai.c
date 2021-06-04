@@ -28,10 +28,14 @@ static void move_wheels(info_t *info)
 {
     float dir = atof(info->lidar[LEFT]) - atof(info->lidar[RIGHT]);
 
-    if (dir < 0.0)
+    if (dir < 0.0 && touching_wall(info) == false)
         move_right(info);
-    else if (dir > 0.0)
+    else if (dir < 0.0 && touching_wall(info) == true)
         move_left(info);
+    else if (dir > 0.0 && touching_wall(info) == false)
+        move_left(info);
+    else if (dir > 0.0 && touching_wall(info) == false)
+        move_right(info);
     else
         print_cmd(info, "WHEELS_DIR:0.0\n");
 }
@@ -41,8 +45,9 @@ int ai(info_t *info)
     while (info->finish == false) {
         print_cmd(info, "GET_INFO_LIDAR\n");
         info->lidar = my_str_to_word_arr(info->buff, ':');
-        move_speed(info);
+        touching_wall(info);
         move_wheels(info);
+        move_speed(info);
         end_track(info);
         free_arr(info->lidar);
     }
@@ -61,6 +66,9 @@ void move_speed(info_t *info)
         if (info->dir >= i && info->dir < (i + 0.1)) {
             speed = 1 - (i + 0.3);
             break;
-            }
-    print_float_cmd(info, "CAR_FORWARD:", speed);
+        }
+    if (touching_wall(info) == true)
+        print_float_cmd(info, "CAR_BACKWARDS:", speed);
+    else
+        print_float_cmd(info, "CAR_FORWARD:", speed);
 } 
