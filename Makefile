@@ -5,14 +5,14 @@
 ## Makefile
 ##
 
-SRC		=	source/main.c \
-			source/init_struct.c \
-			source/print_cmd.c \
-			source/run_cars.c \
-			source/ai.c \
+SRC		=	source/main.c 			\
+			source/init_struct.c 	\
+			source/print_cmd.c 		\
+			source/run_cars.c 		\
+			source/ai.c 			\
 			source/move.c
 
-SRC_UT	=	tests/test.c		\
+SRC_UT	=	tests/test.c			\
 
 OBJ	=	$(SRC:.c=.o)
 
