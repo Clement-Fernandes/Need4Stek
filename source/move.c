@@ -67,7 +67,7 @@ bool touching_wall(info_t *info)
     float left_lidar = atof(info->lidar[LEFT]);
     float right_lidar = atof(info->lidar[RIGHT]);
 
-    if (middle_lidar < 5 || left_lidar < 5 || right_lidar < 5)
+    if (middle_lidar < 5.0 || left_lidar < 5.0 || right_lidar < 5.0)
         return (true);
     else
         return (false);

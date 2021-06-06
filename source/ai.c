@@ -7,21 +7,21 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "my.h"
 #include "needforstek.h"
 
-static void end_track(info_t *info)
+static info_t *end_track(info_t *info)
 {
     for (int i = 3; info->lidar[i] != NULL; i++) {
         if (my_strcmp(info->lidar[i], "Track Cleared") == true) {
             info->finish = true;
-            return;
         }
         else if (my_strcmp(info->lidar[i], "Lap Cleared") == true) {
             info->finish = true;
-            return;
         }
     }
+    return (info);
 }
 
 int ai(info_t *info)
@@ -31,7 +31,10 @@ int ai(info_t *info)
         info->lidar = my_str_to_word_arr(info->buff, ':');
         touching_wall(info);
         move_wheels(info);
-        move_speed(info);
+        if (move_speed(info) == 84) {
+            free(info->lidar);
+            break;
+        }
         end_track(info);
         free_arr(info->lidar);
     }
@@ -40,19 +43,21 @@ int ai(info_t *info)
     return (0);
 }
 
-void move_speed(info_t *info)
+int move_speed(info_t *info)
 {
     float speed = 0;
+    int status = 0;
 
     if (info->dir < 0)
         info->dir *= (-1);
     for (float i = 0; i != 1; i += 0.1)
-        if (info->dir >= i && info->dir < (i + 0.1)) {
+        if ((info->dir >= i) && (info->dir < (i + 0.1))) {
             speed = 1 - (i + 0.3);
             break;
         }
     if (touching_wall(info) == true)
-        print_float_cmd(info, "CAR_BACKWARDS:", speed);
+        status = print_float_cmd(info, "CAR_BACKWARDS:", speed);
     else
-        print_float_cmd(info, "CAR_FORWARD:", speed);
+        status = print_float_cmd(info, "CAR_FORWARD:", speed);
+    return (status);
 }
