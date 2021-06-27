@@ -2,7 +2,7 @@
 
 this project consists of simulating an autonomous car.
 
->Made by :
+Made by :
 <br>
 [Maxime Carabina](https://github.com/psYshiX-07)
 <br>
