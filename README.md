@@ -1,4 +1,4 @@
-# Project Name :flags:
+# Need4Stek :blue_car:
 
 <!-- ABOUT THE PROJECT -->
 
