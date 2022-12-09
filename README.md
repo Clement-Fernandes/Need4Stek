@@ -1,6 +1,6 @@
 # Need4Stek :blue_car:
 
-<!-- ABOUT THE PROJECT -->
+## $\color{green}{Grade: A}$
 
 ## About The Project
 
