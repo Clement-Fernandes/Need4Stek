@@ -54,3 +54,9 @@ make
 ```
 
 **Thank you for your interest in this project. :smile:**
+
+### Project realised by:
+
+- **[@Clément F.](https://github.com/Clement-Fernandes)**
+- **[@Gurvan L.](https://github.com/Gurvan-Le-Letty)**
+- **[@Maxime C.](https://github.com/maxime-carabina)**
